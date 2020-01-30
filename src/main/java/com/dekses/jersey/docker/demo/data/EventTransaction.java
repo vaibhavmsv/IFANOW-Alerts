@@ -2,6 +2,8 @@ package com.dekses.jersey.docker.demo.data;
 
 import com.dekses.jersey.docker.demo.model.Event;
 
+import java.sql.ResultSet;
+
 public class EventTransaction {
 
     private InsertTransaction insertTransaction  = new InsertTransaction();
@@ -18,5 +20,10 @@ public class EventTransaction {
 
     public void insertUser(Event event) {
         insertTransaction.insertUserData(event);
+    }
+
+    public ResultSet getEventsForUser(Event event) {
+        selectTransaction = new SelectTransaction();
+        return selectTransaction.getEventDetailsForUser(event);
     }
 }

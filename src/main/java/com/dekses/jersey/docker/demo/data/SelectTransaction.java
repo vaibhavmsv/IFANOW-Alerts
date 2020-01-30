@@ -10,6 +10,7 @@ import java.sql.Statement;
 public class SelectTransaction {
 
     private String getUserQuery="select userid from sys.user where userid=";
+    private String getEventDetailsForUser = "select * from sys.event where userid=";
 
     public boolean isFirstTimeUser(Event event) {
         try{
@@ -29,4 +30,24 @@ public class SelectTransaction {
         }
         return false;
     }
+
+    public ResultSet getEventDetailsForUser(Event event) {
+        try{
+            String remainingSelectQuery = Integer.toString(event.getUserId());
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con= DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/sys","root","root");
+            Statement stmt=con.createStatement();
+            ResultSet rs=stmt.executeQuery(getEventDetailsForUser+remainingSelectQuery);
+            con.close();
+            return rs;
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+
 }
